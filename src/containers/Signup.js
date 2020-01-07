@@ -28,7 +28,7 @@ export default function Signup(props) {
     );
   }
   function handleFbLogin() {
-    return this.props.userHasAuthenticated(true);
+     this.props.userHasAuthenticated(true);
   };
   function validateConfirmationForm() {
     return fields.confirmationCode.length > 0;
@@ -73,7 +73,7 @@ export default function Signup(props) {
     return (
       <form onSubmit={handleConfirmationSubmit}>
         <FacebookButton
-          onLogin={this.handleFbLogin}
+          onLogin={handleFbLogin}
         />
         <hr />
         <FormGroup controlId="confirmationCode" bsSize="large">

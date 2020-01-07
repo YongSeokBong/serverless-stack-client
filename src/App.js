@@ -14,7 +14,7 @@ function App(props) {
     onLoad();
   }, []);
   async function componentDidMount() {
-    this.loadFacebookSDK();
+    loadFacebookSDK();
   
     try {
       await Auth.currentAuthenticatedUser();

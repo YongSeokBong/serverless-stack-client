@@ -94,7 +94,12 @@ export default function Signup(props) {
 
   function renderForm() {
     return (
+      
       <form onSubmit={handleSubmit}>
+        <FacebookButton
+          onLogin={this.handleFbLogin}
+        />
+        <hr/>
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl

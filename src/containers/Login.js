@@ -15,7 +15,9 @@ export default function Login(props) {
   function validateForm() {
     return fields.email.length > 0 && fields.password.length > 0;
   }
-
+  handleFbLogin = () => {
+    this.props.userHasAuthenticated(true);
+  };
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -34,6 +36,10 @@ export default function Login(props) {
   return (
     <div className="Login">
       <form onSubmit={handleSubmit}>
+        <FacebookButton
+          onLogin={this.handleFbLogin}
+        />
+        <hr/>
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl

@@ -14,7 +14,10 @@
       USER_POOL_ID: "ap-northeast-2_OG0qr5PfL",
       APP_CLIENT_ID: "5un743cc8c98jt5v5dqv4jpiqf",
       IDENTITY_POOL_ID: "ap-northeast-2:27a3305b-8ca7-47c7-9703-b28934de3255"
-    }
+    },
+    social: {
+      FB: "1070539363335092"
+    },
   };
   
   const prod = {
@@ -32,6 +35,9 @@
       USER_POOL_ID: "ap-northeast-2_OG0qr5PfL",
       APP_CLIENT_ID: "5un743cc8c98jt5v5dqv4jpiqf",
       IDENTITY_POOL_ID: "ap-northeast-2:27a3305b-8ca7-47c7-9703-b28934de3255"
+    },
+    social: {
+      FB: "1070539363335092"
     }
   };
   

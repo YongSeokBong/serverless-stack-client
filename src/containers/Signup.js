@@ -48,7 +48,9 @@ export default function Signup(props) {
       setIsLoading(false);
     }
   }
-  
+  handleFbLogin = () => {
+    this.props.userHasAuthenticated(true);
+  };
   async function handleConfirmationSubmit(event) {
     event.preventDefault();
   

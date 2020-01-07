@@ -1,85 +1,71 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import FacebookButton from "../components/FacebookButton";
+import { useFormFields } from "../libs/hooksLib";
 import "./Login.css";
+import FacebookButton from "../components/FacebookButton";
+export default function Login(props) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [fields, handleFieldChange] = useFormFields({
+    email: "",
+    password: ""
+  });
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: false,
-      email: "",
-      password: ""
-    };
+  function validateForm() {
+    return fields.email.length > 0 && fields.password.length > 0;
   }
-
-  validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
-  }
-
-  handleFbLogin = () => {
-    this.props.userHasAuthenticated(true);
+  function handleFbLogin () {
+    return this.props.userHasAuthenticated(true);
   };
-
-  handleChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
-  };
-
-  handleSubmit = async event => {
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    this.setState({ isLoading: true });
+    setIsLoading(true);
 
     try {
-      await Auth.signIn(this.state.email, this.state.password);
-      this.props.userHasAuthenticated(true);
+      await Auth.signIn(fields.email, fields.password);
+      props.userHasAuthenticated(true);
     } catch (e) {
       alert(e.message);
-      this.setState({ isLoading: false });
+      setIsLoading(false);
     }
-  };
-
-  render() {
-    return (
-      <div className="Login">
-        <form onSubmit={this.handleSubmit}>
-          <FacebookButton
-            onLogin={this.handleFbLogin}
-          />
-          <hr />
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
-            <FormControl
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </FormGroup>
-          <LoaderButton
-            block
-            bsSize="large"
-            disabled={!this.validateForm()}
-            type="submit"
-            isLoading={this.state.isLoading}
-            text="Login"
-            loadingText="Logging in…"
-          />
-        </form>
-      </div>
-    );
   }
+
+  return (
+    <div className="Login">
+      <form onSubmit={handleSubmit}>
+        <FacebookButton
+          onLogin={this.handleFbLogin}
+        />
+        <hr />
+        <FormGroup controlId="email" bsSize="large">
+          <ControlLabel>Email</ControlLabel>
+          <FormControl
+            autoFocus
+            type="email"
+            value={fields.email}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId="password" bsSize="large">
+          <ControlLabel>Password</ControlLabel>
+          <FormControl
+            type="password"
+            value={fields.password}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <LoaderButton
+          block
+          type="submit"
+          bsSize="large"
+          isLoading={isLoading}
+          disabled={!validateForm()}
+        >
+          Login
+        </LoaderButton>
+      </form>
+    </div>
+  );
 }

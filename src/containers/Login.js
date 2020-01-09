@@ -3,8 +3,9 @@ import { Auth } from "aws-amplify";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import { useFormFields } from "../libs/hooksLib";
+import FacebookButton from "../components/FacebookButton"
 import "./Login.css";
-import FacebookButton from "../components/FacebookButton";
+
 export default function Login(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
@@ -15,8 +16,8 @@ export default function Login(props) {
   function validateForm() {
     return fields.email.length > 0 && fields.password.length > 0;
   }
-  function handleFbLogin () {
-     this.props.userHasAuthenticated(true);
+  function handleFbLogin() {
+    props.userHasAuthenticated(true);
   };
   async function handleSubmit(event) {
     event.preventDefault();
@@ -35,7 +36,7 @@ export default function Login(props) {
   return (
     <div className="Login">
       <form onSubmit={handleSubmit}>
-        <FacebookButton
+       <FacebookButton
           onLogin={handleFbLogin}
         />
         <hr />

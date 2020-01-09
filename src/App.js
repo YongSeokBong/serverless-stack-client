@@ -4,30 +4,32 @@ import { Link, withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Routes from "./Routes";
-import "./App.css";
 import config from "./config";
+import "./App.css";
+
 function App(props) {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
   useEffect(() => {
     onLoad();
-  }, []);
-  async function componentDidMount() {
     loadFacebookSDK();
-  
+  });
+
+  async function onLoad() {
+    loadFacebookSDK();
     try {
-      await Auth.currentAuthenticatedUser();
-      this.userHasAuthenticated(true);
-    } catch (e) {
-      if (e !== "not authenticated") {
+      await Auth.currentSession();
+      userHasAuthenticated(true);
+    }
+    catch(e) {
+      if (e !== 'No current user') {
         alert(e);
       }
     }
-  
-    this.setState({ isAuthenticating: false });
+
+    setIsAuthenticating(false);
   }
-  
   function loadFacebookSDK() {
     window.fbAsyncInit = function() {
       window.FB.init({
@@ -46,20 +48,6 @@ function App(props) {
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
   }
-  async function onLoad() {
-    try {
-      await Auth.currentSession();
-      userHasAuthenticated(true);
-    }
-    catch(e) {
-      if (e !== 'No current user') {
-        alert(e);
-      }
-    }
-
-    setIsAuthenticating(false);
-  }
-
   async function handleLogout() {
     await Auth.signOut();
 

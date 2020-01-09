@@ -9,7 +9,7 @@ import {
 import LoaderButton from "../components/LoaderButton";
 import { useFormFields } from "../libs/hooksLib";
 import "./Signup.css";
-import FacebookButton from "../components/FacebookButton";
+
 export default function Signup(props) {
   const [fields, handleFieldChange] = useFormFields({
     email: "",
@@ -27,9 +27,7 @@ export default function Signup(props) {
       fields.password === fields.confirmPassword
     );
   }
-  function handleFbLogin() {
-     this.props.userHasAuthenticated(true);
-  };
+
   function validateConfirmationForm() {
     return fields.confirmationCode.length > 0;
   }
@@ -72,10 +70,6 @@ export default function Signup(props) {
   function renderConfirmationForm() {
     return (
       <form onSubmit={handleConfirmationSubmit}>
-        <FacebookButton
-          onLogin={handleFbLogin}
-        />
-        <hr />
         <FormGroup controlId="confirmationCode" bsSize="large">
           <ControlLabel>Confirmation Code</ControlLabel>
           <FormControl
